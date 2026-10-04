@@ -1,5 +1,6 @@
 """HTTP/storage regressions for page media and authenticated range requests."""
 import io
+import os
 import json
 from pathlib import Path
 import unittest
@@ -40,7 +41,9 @@ class PageFileTests(unittest.TestCase):
         self.assertEqual(item['size'], len(content))
         path = self.app.UPLOAD_DIR / item['id']
         self.assertEqual(path.read_bytes(), content)
-        self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        # Windows uses inherited ACLs, not POSIX permission bits.
+        if os.name != 'nt':
+            self.assertEqual(path.stat().st_mode & 0o777, 0o600)
         # A new connection (as after restart) reads the committed file reference.
         db = self.app.db()
         self.assertEqual(db.execute('SELECT size FROM files WHERE id=?',(item['id'],)).fetchone()[0], len(content))
