@@ -1,0 +1,32 @@
+{
+  "name": "thuis",
+  "version": "1.0.0",
+  "description": "Je eigen gezinsdashboard: agenda, taken, chat, pagina’s en bestanden.",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "esbuild editor.js --bundle --minify --outfile=assets/page-editor.js && node build-pdf-assets.mjs",
+    "test:editor": "node --test tests/editor-media.test.mjs",
+    "test": "python3 -m unittest discover -s tests && npm run test:editor",
+    "start": "python3 run.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@tiptap/core": "3.31.3",
+    "@tiptap/extension-list": "3.31.3",
+    "@tiptap/extension-placeholder": "3.31.3",
+    "@tiptap/extension-table": "3.31.3",
+    "@tiptap/markdown": "3.31.3",
+    "@tiptap/starter-kit": "3.31.3",
+    "pdfjs-dist": "6.3.289"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "private": true
+}

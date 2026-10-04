@@ -1,0 +1,6 @@
+Pillow==12.3.0
+cryptography>=46,<49
+pywebpush==2.5.0
+icalendar>=6,<8
+recurring-ical-events>=3,<4
+tzdata>=2025.1

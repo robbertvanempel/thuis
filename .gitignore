@@ -1,0 +1,29 @@
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+macos/build/
+.env
+.env.*
+!.env.example
+data/
+private/
+.thuis/
+*.sqlite*
+*.db
+*.pem
+*.key
+*.enc
+config.json
+allowed-origins.json
+notion-import.json
+review/
+*.log
+*.zip
+*.dmg
+*.app/
+playwright-report/
+test-results/
+Start Thuis.command
+Start Thuis.cmd
