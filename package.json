@@ -1,6 +1,6 @@
 {
   "name": "thuis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Je eigen gezinsdashboard: agenda, taken, chat, pagina’s en bestanden.",
   "main": "app.js",
   "directories": {

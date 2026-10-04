@@ -98,9 +98,12 @@ def store_upload(connection, folder, page_id, user, headers, stream, timestamp):
             return describe(existing)
         os.replace(temporary, destination)
         # Persist the directory entry before acknowledging the database record.
-        directory_fd = os.open(folder, os.O_RDONLY)
-        try: os.fsync(directory_fd)
-        finally: os.close(directory_fd)
+        # Windows cannot open directories through os.open. The file itself was
+        # flushed above and os.replace still performs the atomic rename.
+        if os.name != 'nt':
+            directory_fd = os.open(folder, os.O_RDONLY)
+            try: os.fsync(directory_fd)
+            finally: os.close(directory_fd)
         connection.execute('INSERT INTO files(id,page_id,username,filename,media_type,size,created_at,upload_id,sha256) VALUES(?,?,?,?,?,?,?,?,?)',
             (file_id, page_id, user, filename, media_type(head, filename), length, timestamp, upload_id, digest.hexdigest()))
         connection.commit()

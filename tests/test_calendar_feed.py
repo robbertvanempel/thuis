@@ -18,7 +18,7 @@ class CalendarFeedTests(unittest.TestCase):
         today = datetime.now(ZoneInfo('Europe/Amsterdam')).strftime('%Y%m%d')
         ics = f'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Thuis test//EN\r\nBEGIN:VEVENT\r\nUID:synthetic-test-event\r\nDTSTART;VALUE=DATE:{today}\r\nRRULE:FREQ=DAILY;COUNT=3\r\nSUMMARY:Synthetic appointment\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n'
         with TemporaryDirectory() as folder:
-            private=Path(folder); (private/'test.ics').write_text(ics)
+            private=Path(folder); (private/'test.ics').write_bytes(ics.encode('utf-8'))
             result=read_calendar({'calendars':[{'file':'test.ics','name':'Test'}]},private)
             self.assertEqual(result['status'],'connected')
             self.assertEqual(len(result['items']),3)
