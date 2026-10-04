@@ -51,7 +51,7 @@ class PublicInstallTests(unittest.TestCase):
                     self.assertEqual(connection.execute(f'SELECT count(*) FROM {table}').fetchone()[0], 0)
                 connection.close()
                 self.assertEqual(request('/api/pages')[0], 401)
-                names = ['Alex & Co', 'Noor van Test']
+                names = ['Alex & Co', 'Noor 🌿']
                 payload = {'token':token,'members':names,'passwords':['Synthetic-test-pass-1','Synthetic-test-pass-2']}
                 self.assertEqual(request('/api/setup',{**payload,'token':'invalid'})[0],403)
                 self.assertEqual(request('/api/setup',payload,origin='https://untrusted.example')[0],403)

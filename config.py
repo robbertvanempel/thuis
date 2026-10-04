@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 
 PRIVATE_DIR = Path(os.environ.get('FAMILY_DASHBOARD_DATA', Path.home() / '.thuis')).expanduser()
 CONFIG_FILE = PRIVATE_DIR / 'config.json'
-SETTINGS = json.loads(CONFIG_FILE.read_text()) if CONFIG_FILE.exists() else {}
+SETTINGS = json.loads(CONFIG_FILE.read_text(encoding='utf-8')) if CONFIG_FILE.exists() else {}
 MEMBERS = list(SETTINGS.get('members', ['Ouder 1', 'Ouder 2']))
 
 
@@ -26,7 +26,7 @@ def save_members(names):
     PRIVATE_DIR.mkdir(mode=0o700, parents=True, exist_ok=True)
     value = {**SETTINGS, 'members': names}
     temporary = CONFIG_FILE.with_suffix('.tmp')
-    with os.fdopen(os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), 'w') as stream:
+    with os.fdopen(os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), 'w', encoding='utf-8') as stream:
         json.dump(value, stream, ensure_ascii=False, indent=2)
         stream.flush()
         os.fsync(stream.fileno())
